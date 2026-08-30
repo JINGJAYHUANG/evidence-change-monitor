@@ -74,12 +74,28 @@ jobs:
                       raise SystemExit('archive exceeds extracted-size limit')
               archive.extractall(destination, filter='data')
           PY
-          rsync -a --delete --exclude='.git/' /tmp/evidence-change-monitor-unpacked/ ./
-          test ! -e .bootstrap
-          test ! -e .github/workflows/apply-public-v010.yml
 
-      - name: Run complete release gate
-        run: python tools/release_check.py
+      - name: Install readable source and run complete release gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp .github/workflows/apply-public-v010.yml /tmp/apply-public-v010.yml
+          rsync -a --delete \
+            --exclude='.git/' \
+            --exclude='.github/workflows/' \
+            /tmp/evidence-change-monitor-unpacked/ ./
+          test ! -e .bootstrap
+
+          mkdir -p .github/workflows
+          cp /tmp/evidence-change-monitor-unpacked/.github/workflows/ci.yml .github/workflows/ci.yml
+          cp /tmp/evidence-change-monitor-unpacked/.github/workflows/release.yml .github/workflows/release.yml
+          rm .github/workflows/apply-public-v010.yml
+
+          python tools/release_check.py
+
+          rm .github/workflows/ci.yml .github/workflows/release.yml
+          cp /tmp/apply-public-v010.yml .github/workflows/apply-public-v010.yml
+          test -z "$(git status --porcelain -- .github/workflows)"
 
       - name: Commit readable source to feature branch
         shell: bash
@@ -88,6 +104,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
+          test -z "$(git diff --cached --name-only -- .github/workflows)"
           if git diff --cached --quiet; then
             echo 'No source changes to commit.'
             exit 0
