@@ -1,0 +1,104 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: evidence-change-monitor-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-24.04
+    env:
+      PYTHONPATH: src
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: ""
+
+      - name: Run release gate
+        run: python tools/release_check.py
+
+      - name: Exercise stateful synthetic monitor
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$(mktemp -d)"
+          python -m evidence_change_monitor run \
+            --registry examples/synthetic_public_monitor/registry.json \
+            --input-dir examples/synthetic_public_monitor/baseline \
+            --state-dir "$root/state" \
+            --output-dir "$root/baseline" \
+            --as-of 2026-08-29T00:00:00Z \
+            --commit-state
+          python -m evidence_change_monitor run \
+            --registry examples/synthetic_public_monitor/registry.json \
+            --input-dir examples/synthetic_public_monitor/current \
+            --state-dir "$root/state" \
+            --output-dir "$root/current" \
+            --as-of 2026-08-30T08:00:00Z \
+            --commit-state
+          python -m evidence_change_monitor verify "$root/current"
+
+  reproducible-wheel:
+    name: Reproducible wheel
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+          cache: ""
+
+      - name: Install pinned build tooling
+        run: python -m pip install --disable-pip-version-check setuptools==80.9.0 wheel==0.45.1
+
+      - name: Build twice and compare
+        shell: bash
+        env:
+          SOURCE_DATE_EPOCH: "1788048000"
+        run: |
+          set -euo pipefail
+          version="$(python -c 'import tomllib; from pathlib import Path; print(tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))["project"]["version"])')"
+          mkdir -p /tmp/wheel-a /tmp/wheel-b
+          python -m pip wheel \
+            --disable-pip-version-check \
+            --no-deps \
+            --no-build-isolation \
+            --wheel-dir /tmp/wheel-a .
+          python -m pip wheel \
+            --disable-pip-version-check \
+            --no-deps \
+            --no-build-isolation \
+            --wheel-dir /tmp/wheel-b .
+          cmp \
+            "/tmp/wheel-a/evidence_change_monitor-${version}-py3-none-any.whl" \
+            "/tmp/wheel-b/evidence_change_monitor-${version}-py3-none-any.whl"
+          sha256sum /tmp/wheel-a/*.whl
