@@ -1,0 +1,108 @@
+{
+  "$id": "https://example.invalid/schemas/event.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "after": {},
+    "baseline_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "before": {},
+    "change_type": {
+      "enum": [
+        "source.first_seen",
+        "source.missing",
+        "source.parse_error",
+        "source.oversize",
+        "content.normalized_unchanged",
+        "text.added",
+        "text.removed",
+        "text.modified",
+        "json.added",
+        "json.removed",
+        "json.modified",
+        "feed.item_added",
+        "feed.item_removed",
+        "feed.item_modified"
+      ]
+    },
+    "current_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "event_id": {
+      "pattern": "^[0-9a-f]{24}$",
+      "type": "string"
+    },
+    "independence_group": {
+      "type": "string"
+    },
+    "locator": {
+      "type": "string"
+    },
+    "matched_rule_ids": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "observed_at": {
+      "type": "string"
+    },
+    "path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "severity": {
+      "enum": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "source_title": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "tags": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "event_id",
+    "source_id",
+    "source_title",
+    "locator",
+    "independence_group",
+    "change_type",
+    "severity",
+    "observed_at",
+    "baseline_sha256",
+    "current_sha256",
+    "path",
+    "before",
+    "after",
+    "summary",
+    "matched_rule_ids",
+    "tags"
+  ],
+  "title": "Evidence Change Event",
+  "type": "object"
+}

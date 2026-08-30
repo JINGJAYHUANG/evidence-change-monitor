@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evidence Change Report — synthetic-public-evidence</title>
+<style>
+:root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+body { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; line-height: 1.55; }
+header, section { margin-bottom: 2rem; }
+.summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .8rem; }
+.metric, .event { border: 1px solid #8886; border-radius: .7rem; padding: 1rem; overflow-wrap: anywhere; }
+.events { display: grid; gap: 1rem; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border-bottom: 1px solid #8885; padding: .6rem; text-align: left; }
+.table-wrap { overflow-x: auto; }
+code { overflow-wrap: anywhere; }
+.severity-critical { border-inline-start: .45rem solid currentColor; }
+.severity-high { border-inline-start: .35rem solid currentColor; }
+@media (max-width: 520px) { body { padding: 1rem .7rem; } }
+@media print { a { color: inherit; text-decoration: none; } .event { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<header>
+<h1>Evidence Change Report</h1>
+<p><strong>synthetic-public-evidence</strong> · as of <code>2026-08-30T08:00:00Z</code></p>
+<p>A detected event proves only that the monitored representation changed between the named snapshots.</p>
+</header>
+<section class="summary">
+<div class="metric"><strong>5</strong><br>material events</div>
+<div class="metric"><strong>1</strong><br>ignored normalized changes</div>
+<div class="metric"><strong>0</strong><br>failed sources</div>
+<div class="metric"><strong>4</strong><br>captured sources</div>
+</section>
+<section>
+<h2>Source outcomes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Source</th><th>Status</th><th>Raw changed</th><th>Monitored changed</th><th>Events</th></tr></thead>
+<tbody><tr><td><code>policy-notice</code></td><td>changed</td><td>yes</td><td>yes</td><td>1</td></tr><tr><td><code>release-metadata</code></td><td>changed</td><td>yes</td><td>yes</td><td>2</td></tr><tr><td><code>research-feed</code></td><td>changed</td><td>yes</td><td>yes</td><td>2</td></tr><tr><td><code>service-status</code></td><td>ignored_change</td><td>yes</td><td>no</td><td>1</td></tr></tbody>
+</table></div>
+</section>
+<section>
+<h2>Events</h2>
+<div class="events"><article class="event severity-critical">
+<h3>Synthetic policy notice</h3>
+<p><code>text.modified</code> · <strong>CRITICAL</strong></p>
+<p>Replaced 1 normalized line(s) with 1 line(s)</p>
+<dl>
+<dt>Path</dt><dd><code>lines:2-2:2-2</code></dd>
+<dt>Before</dt><dd><code>[&quot;Applications are open through 2026-09-30.&quot;]</code></dd>
+<dt>After</dt><dd><code>[&quot;Applications are suspended pending an eligibility review.&quot;]</code></dd>
+<dt>Rules</dt><dd>policy-suspension</dd>
+</dl>
+<p><a href="https://example.invalid/policy-notice" rel="noreferrer">Source locator</a></p>
+</article>
+<article class="event severity-high">
+<h3>Synthetic release metadata</h3>
+<p><code>json.modified</code> · <strong>HIGH</strong></p>
+<p>JSON value changed at /compatibility/minimum_python</p>
+<dl>
+<dt>Path</dt><dd><code>/compatibility/minimum_python</code></dd>
+<dt>Before</dt><dd><code>3.11</code></dd>
+<dt>After</dt><dd><code>3.12</code></dd>
+<dt>Rules</dt><dd>breaking-compatibility</dd>
+</dl>
+<p><a href="https://example.invalid/releases/latest.json" rel="noreferrer">Source locator</a></p>
+</article>
+<article class="event severity-medium">
+<h3>Synthetic release metadata</h3>
+<p><code>json.modified</code> · <strong>MEDIUM</strong></p>
+<p>JSON value changed at /version</p>
+<dl>
+<dt>Path</dt><dd><code>/version</code></dd>
+<dt>Before</dt><dd><code>1.4.0</code></dd>
+<dt>After</dt><dd><code>2.0.0</code></dd>
+<dt>Rules</dt><dd>none</dd>
+</dl>
+<p><a href="https://example.invalid/releases/latest.json" rel="noreferrer">Source locator</a></p>
+</article>
+<article class="event severity-medium">
+<h3>Synthetic research feed</h3>
+<p><code>feed.item_added</code> · <strong>MEDIUM</strong></p>
+<p>Feed item added: New synthetic replication note</p>
+<dl>
+<dt>Path</dt><dd><code>item:research-002</code></dd>
+<dt>Before</dt><dd><code>—</code></dd>
+<dt>After</dt><dd><code>{&quot;id&quot;: &quot;research-002&quot;, &quot;link&quot;: &quot;https://example.invalid/research/002&quot;, &quot;published&quot;: &quot;2026-08-30T01:00:00Z&quot;, &quot;summary&quot;: &quot;A new synthetic replication result.&quot;, &quot;title&quot;: &quot;New synthetic replication note&quot;}</code></dd>
+<dt>Rules</dt><dd>new-research-item</dd>
+</dl>
+<p><a href="https://example.invalid/research.xml" rel="noreferrer">Source locator</a></p>
+</article>
+<article class="event severity-low">
+<h3>Synthetic research feed</h3>
+<p><code>feed.item_modified</code> · <strong>LOW</strong></p>
+<p>Feed item changed: Baseline methods note</p>
+<dl>
+<dt>Path</dt><dd><code>item:research-001</code></dd>
+<dt>Before</dt><dd><code>{&quot;id&quot;: &quot;research-001&quot;, &quot;link&quot;: &quot;https://example.invalid/research/001&quot;, &quot;published&quot;: &quot;2026-08-20T00:00:00Z&quot;, &quot;summary&quot;: &quot;Initial synthetic methods note.&quot;, &quot;title&quot;: &quot;Baseline methods note&quot;}</code></dd>
+<dt>After</dt><dd><code>{&quot;id&quot;: &quot;research-001&quot;, &quot;link&quot;: &quot;https://example.invalid/research/001&quot;, &quot;published&quot;: &quot;2026-08-30T00:00:00Z&quot;, &quot;summary&quot;: &quot;Revised synthetic methods note with a larger sample.&quot;, &quot;title&quot;: &quot;Baseline methods note&quot;}</code></dd>
+<dt>Rules</dt><dd>none</dd>
+</dl>
+<p><a href="https://example.invalid/research.xml" rel="noreferrer">Source locator</a></p>
+</article>
+<article class="event severity-low">
+<h3>Synthetic service status</h3>
+<p><code>content.normalized_unchanged</code> · <strong>LOW</strong></p>
+<p>Raw bytes changed, but the configured normalizer produced identical monitored content</p>
+<dl>
+<dt>Path</dt><dd><code>service-status.txt</code></dd>
+<dt>Before</dt><dd><code>2883a2fcb9dcd14e20efc812e96c78600e836107c8208314be294917171801de</code></dd>
+<dt>After</dt><dd><code>7cbef19ef4829bc50562028c156fd140bbb85ddef449a4cca1e71e45b34772f0</code></dd>
+<dt>Rules</dt><dd>none</dd>
+</dl>
+<p><a href="urn:synthetic:service-status" rel="noreferrer">Source locator</a></p>
+</article></div>
+</section>
+<section>
+<h2>Limitations</h2>
+<ul><li>The monitor compares captured representations, not the full external source.</li><li>A detected change does not prove legal effect, causality, truthfulness, or material impact.</li><li>No detected change does not prove that the source or underlying reality was unchanged.</li><li>Normalization rules can intentionally hide volatile fields and must be reviewed as part of the monitoring scope.</li><li>The v0.1.0 core does not fetch the network; it processes explicit local captures so acquisition can be isolated and audited.</li></ul>
+</section>
+</body>
+</html>

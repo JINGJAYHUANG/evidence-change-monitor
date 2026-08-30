@@ -1,0 +1,198 @@
+name: Release
+
+on:
+  create:
+  push:
+    branches:
+      - "release/v*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: evidence-change-monitor-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Verify and publish
+    if: >-
+      (github.event_name == 'create' &&
+       github.event.ref_type == 'branch' &&
+       startsWith(github.event.ref, 'release/v')) ||
+      (github.event_name == 'push' &&
+       startsWith(github.ref_name, 'release/v'))
+    runs-on: ubuntu-24.04
+    env:
+      PYTHONPATH: src
+
+    steps:
+      - name: Check out immutable candidate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+          cache: ""
+
+      - name: Confirm candidate equals current main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main --no-tags
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)"
+
+      - name: Resolve and verify version
+        id: version
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_EVENT_NAME" == "create" ]]; then
+            release_ref="${{ github.event.ref }}"
+          else
+            release_ref="$GITHUB_REF_NAME"
+          fi
+          version="${release_ref#release/}"
+          [[ "$version" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          expected="v$(python - <<'PY'
+          import re
+          import tomllib
+          from pathlib import Path
+
+          project = tomllib.loads(Path('pyproject.toml').read_text(encoding='utf-8'))['project']['version']
+          source = re.search(
+              r'__version__\s*=\s*"([^"]+)"',
+              Path('src/evidence_change_monitor/version.py').read_text(encoding='utf-8'),
+          ).group(1)
+          if project != source:
+              raise SystemExit(f'version mismatch: project={project}, source={source}')
+          if not Path(f'docs/release-notes/v{project}.md').is_file():
+              raise SystemExit('release notes are missing')
+          print(project)
+          PY
+          )"
+          test "$version" = "$expected"
+          echo "value=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Re-run release gate
+        run: python tools/release_check.py
+
+      - name: Install pinned build tooling
+        run: python -m pip install --disable-pip-version-check setuptools==80.9.0 wheel==0.45.1
+
+      - name: Configure tag identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Create or verify release tag
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.value }}
+        run: |
+          set -euo pipefail
+          head_sha="$(git rev-parse HEAD)"
+          if git ls-remote --exit-code --tags origin "refs/tags/$VERSION" >/dev/null 2>&1; then
+            git fetch origin "refs/tags/$VERSION:refs/tags/$VERSION" --force
+            tag_sha="$(git rev-list -n 1 "$VERSION")"
+            if [[ "$tag_sha" != "$head_sha" ]]; then
+              if gh release view "$VERSION" >/dev/null 2>&1; then
+                echo "refusing to move a tag that already has a GitHub Release" >&2
+                exit 1
+              fi
+              git tag -fa "$VERSION" -m "Evidence Change Monitor $VERSION" HEAD
+              git push --force origin "refs/tags/$VERSION"
+            fi
+          else
+            git tag -a "$VERSION" -m "Evidence Change Monitor $VERSION" HEAD
+            git push origin "refs/tags/$VERSION"
+          fi
+
+      - name: Build and verify release assets
+        shell: bash
+        env:
+          VERSION: ${{ steps.version.outputs.value }}
+        run: |
+          set -euo pipefail
+          version="${VERSION#v}"
+          rm -rf dist
+          mkdir -p dist
+          prefix="evidence-change-monitor-${version}/"
+          git archive --format=tar --prefix="$prefix" HEAD \
+            | gzip -n > "dist/evidence-change-monitor-${version}.tar.gz"
+          git archive --format=zip --prefix="$prefix" HEAD \
+            > "dist/evidence-change-monitor-${version}.zip"
+          SOURCE_DATE_EPOCH="$(git show -s --format=%ct HEAD)" \
+            python -m pip wheel \
+              --disable-pip-version-check \
+              --no-deps \
+              --no-build-isolation \
+              --wheel-dir dist .
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          registry = json.loads(Path('config/registry.example.json').read_text(encoding='utf-8'))
+          payload = {
+              'schema_version': 1,
+              'repository': os.environ['GITHUB_REPOSITORY'],
+              'tag': os.environ['VERSION'],
+              'commit': os.environ['GITHUB_SHA'],
+              'workflow_run_id': os.environ['GITHUB_RUN_ID'],
+              'workflow_run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'python_matrix': ['3.11', '3.12', '3.13'],
+              'source_formats': sorted({item['format'] for item in registry['sources']}),
+              'synthetic_source_count': len(registry['sources']),
+              'network_fetching': False,
+              'release_gate': 'passed',
+          }
+          Path('dist/RELEASE_PROVENANCE.json').write_text(
+              json.dumps(payload, indent=2, sort_keys=True) + '\n',
+              encoding='utf-8',
+          )
+          PY
+          (
+            cd dist
+            sha256sum \
+              "evidence-change-monitor-${version}.tar.gz" \
+              "evidence-change-monitor-${version}.zip" \
+              "evidence_change_monitor-${version}-py3-none-any.whl" \
+              RELEASE_PROVENANCE.json \
+              > SHA256SUMS.txt
+            sha256sum -c SHA256SUMS.txt
+          )
+
+      - name: Create or repair GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.value }}
+        run: |
+          set -euo pipefail
+          version="${VERSION#v}"
+          notes="docs/release-notes/${VERSION}.md"
+          assets=(
+            "dist/evidence-change-monitor-${version}.tar.gz"
+            "dist/evidence-change-monitor-${version}.zip"
+            "dist/evidence_change_monitor-${version}-py3-none-any.whl"
+            "dist/SHA256SUMS.txt"
+            "dist/RELEASE_PROVENANCE.json"
+          )
+          if gh release view "$VERSION" >/dev/null 2>&1; then
+            gh release edit "$VERSION" \
+              --title "Evidence Change Monitor $VERSION" \
+              --notes-file "$notes"
+            gh release upload "$VERSION" "${assets[@]}" --clobber
+          else
+            gh release create "$VERSION" "${assets[@]}" \
+              --title "Evidence Change Monitor $VERSION" \
+              --notes-file "$notes" \
+              --verify-tag
+          fi

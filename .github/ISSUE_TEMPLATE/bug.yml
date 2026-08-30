@@ -1,0 +1,26 @@
+name: Bug report
+description: Report incorrect monitoring, state, or report behavior.
+title: "[Bug] "
+labels: []
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Observed behavior
+      description: Describe the behavior without including private targets or credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal synthetic reproduction
+      description: Include a synthetic registry, baseline, and current input when possible.
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Evidence boundary
+      description: State what the result proves and what it does not prove.
+    validations:
+      required: true
