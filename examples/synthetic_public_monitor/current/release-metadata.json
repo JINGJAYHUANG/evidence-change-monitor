@@ -1,0 +1,14 @@
+{
+  "compatibility": {
+    "minimum_python": "3.12",
+    "platforms": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  "generated_at": "2026-08-30T08:00:00Z",
+  "project": "Synthetic Toolkit",
+  "status": "stable",
+  "version": "2.0.0"
+}

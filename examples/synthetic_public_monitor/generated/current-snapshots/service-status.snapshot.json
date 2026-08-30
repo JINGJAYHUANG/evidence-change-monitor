@@ -1,0 +1,20 @@
+{
+  "error": null,
+  "independence_group": "synthetic-operator",
+  "input_path": "service-status.txt",
+  "locator": "urn:synthetic:service-status",
+  "normalized": [
+    "System status: operational"
+  ],
+  "normalized_sha256": "6b455218d100ae189830c53552f3da48cfe35349ea51141a7cfef5680ae8cc6a",
+  "normalizer_version": "1.0",
+  "observed_at": "2026-08-30T08:00:00Z",
+  "priority": "medium",
+  "raw_bytes": 31,
+  "raw_sha256": "7cbef19ef4829bc50562028c156fd140bbb85ddef449a4cca1e71e45b34772f0",
+  "schema_version": 1,
+  "source_format": "text",
+  "source_id": "service-status",
+  "status": "ok",
+  "title": "Synthetic service status"
+}

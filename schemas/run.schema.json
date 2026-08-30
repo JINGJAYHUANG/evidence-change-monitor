@@ -1,0 +1,68 @@
+{
+  "$id": "https://example.invalid/schemas/run.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "as_of": {
+      "type": "string"
+    },
+    "baseline_run_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "current_snapshot_count": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "events": {
+      "items": {
+        "$ref": "event.schema.json"
+      },
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "monitor_id": {
+      "type": "string"
+    },
+    "registry_sha256": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "source_outcomes": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "summary": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "monitor_id",
+    "run_id",
+    "as_of",
+    "registry_sha256",
+    "baseline_run_id",
+    "current_snapshot_count",
+    "events",
+    "source_outcomes",
+    "summary",
+    "limitations"
+  ],
+  "title": "Evidence Change Monitor Run",
+  "type": "object"
+}

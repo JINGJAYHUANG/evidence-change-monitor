@@ -1,0 +1,33 @@
+{
+  "error": null,
+  "independence_group": "synthetic-research-publisher",
+  "input_path": "research-feed.xml",
+  "locator": "https://example.invalid/research.xml",
+  "normalized": [
+    {
+      "id": "research-001",
+      "link": "https://example.invalid/research/001",
+      "published": "2026-08-30T00:00:00Z",
+      "summary": "Revised synthetic methods note with a larger sample.",
+      "title": "Baseline methods note"
+    },
+    {
+      "id": "research-002",
+      "link": "https://example.invalid/research/002",
+      "published": "2026-08-30T01:00:00Z",
+      "summary": "A new synthetic replication result.",
+      "title": "New synthetic replication note"
+    }
+  ],
+  "normalized_sha256": "5475ac6fc11b9700f64a1011970315e5201286f27a493554831b7cfe485ad012",
+  "normalizer_version": "1.0",
+  "observed_at": "2026-08-30T08:00:00Z",
+  "priority": "medium",
+  "raw_bytes": 651,
+  "raw_sha256": "17d5b67a820bbd8313c5095fbb95e56e3207ac5b017af14e2b5d068fcdc244fb",
+  "schema_version": 1,
+  "source_format": "feed",
+  "source_id": "research-feed",
+  "status": "ok",
+  "title": "Synthetic research feed"
+}

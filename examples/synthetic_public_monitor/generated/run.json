@@ -1,0 +1,199 @@
+{
+  "as_of": "2026-08-30T08:00:00Z",
+  "baseline_run_id": "2026-08-29-43f06d202db55226",
+  "current_snapshot_count": 4,
+  "events": [
+    {
+      "after": "[\"Applications are suspended pending an eligibility review.\"]",
+      "baseline_sha256": "2dd9d4cad12eec13f78ed3541318519cf62d731e4947e37c87cd64d873b4b612",
+      "before": "[\"Applications are open through 2026-09-30.\"]",
+      "change_type": "text.modified",
+      "current_sha256": "26c37f0de50cff1d6823cb47bec53d91b68bb076ed2154e1b9bc705cdcc11d9b",
+      "event_id": "675cf95fb911efa5c4491894",
+      "independence_group": "synthetic-authority",
+      "locator": "https://example.invalid/policy-notice",
+      "matched_rule_ids": [
+        "policy-suspension"
+      ],
+      "observed_at": "2026-08-30T08:00:00Z",
+      "path": "lines:2-2:2-2",
+      "severity": "critical",
+      "source_id": "policy-notice",
+      "source_title": "Synthetic policy notice",
+      "summary": "Replaced 1 normalized line(s) with 1 line(s)",
+      "tags": [
+        "policy",
+        "action-required"
+      ]
+    },
+    {
+      "after": "3.12",
+      "baseline_sha256": "0044f2527af3bc9cd72204a302777677c495d594e414096bb76bb2dc86aeecd0",
+      "before": "3.11",
+      "change_type": "json.modified",
+      "current_sha256": "d4b1db2330c968d84f0c7c18946aac1bfc99320adec686dd3a0c74aa7f6acb3d",
+      "event_id": "400ff7f66d64244463fcce59",
+      "independence_group": "synthetic-project",
+      "locator": "https://example.invalid/releases/latest.json",
+      "matched_rule_ids": [
+        "breaking-compatibility"
+      ],
+      "observed_at": "2026-08-30T08:00:00Z",
+      "path": "/compatibility/minimum_python",
+      "severity": "high",
+      "source_id": "release-metadata",
+      "source_title": "Synthetic release metadata",
+      "summary": "JSON value changed at /compatibility/minimum_python",
+      "tags": [
+        "release",
+        "compatibility"
+      ]
+    },
+    {
+      "after": "2.0.0",
+      "baseline_sha256": "0044f2527af3bc9cd72204a302777677c495d594e414096bb76bb2dc86aeecd0",
+      "before": "1.4.0",
+      "change_type": "json.modified",
+      "current_sha256": "d4b1db2330c968d84f0c7c18946aac1bfc99320adec686dd3a0c74aa7f6acb3d",
+      "event_id": "5616454cdffd79eb68772d44",
+      "independence_group": "synthetic-project",
+      "locator": "https://example.invalid/releases/latest.json",
+      "matched_rule_ids": [],
+      "observed_at": "2026-08-30T08:00:00Z",
+      "path": "/version",
+      "severity": "medium",
+      "source_id": "release-metadata",
+      "source_title": "Synthetic release metadata",
+      "summary": "JSON value changed at /version",
+      "tags": []
+    },
+    {
+      "after": "{\"id\": \"research-002\", \"link\": \"https://example.invalid/research/002\", \"published\": \"2026-08-30T01:00:00Z\", \"summary\": \"A new synthetic replication result.\", \"title\": \"New synthetic replication note\"}",
+      "baseline_sha256": "88652908608755af549732343f486cb5639a56596907b324fb468330e27b2914",
+      "before": null,
+      "change_type": "feed.item_added",
+      "current_sha256": "5475ac6fc11b9700f64a1011970315e5201286f27a493554831b7cfe485ad012",
+      "event_id": "d1c4666bfdf5b62f5c49ea18",
+      "independence_group": "synthetic-research-publisher",
+      "locator": "https://example.invalid/research.xml",
+      "matched_rule_ids": [
+        "new-research-item"
+      ],
+      "observed_at": "2026-08-30T08:00:00Z",
+      "path": "item:research-002",
+      "severity": "medium",
+      "source_id": "research-feed",
+      "source_title": "Synthetic research feed",
+      "summary": "Feed item added: New synthetic replication note",
+      "tags": [
+        "research",
+        "new-item"
+      ]
+    },
+    {
+      "after": "{\"id\": \"research-001\", \"link\": \"https://example.invalid/research/001\", \"published\": \"2026-08-30T00:00:00Z\", \"summary\": \"Revised synthetic methods note with a larger sample.\", \"title\": \"Baseline methods note\"}",
+      "baseline_sha256": "88652908608755af549732343f486cb5639a56596907b324fb468330e27b2914",
+      "before": "{\"id\": \"research-001\", \"link\": \"https://example.invalid/research/001\", \"published\": \"2026-08-20T00:00:00Z\", \"summary\": \"Initial synthetic methods note.\", \"title\": \"Baseline methods note\"}",
+      "change_type": "feed.item_modified",
+      "current_sha256": "5475ac6fc11b9700f64a1011970315e5201286f27a493554831b7cfe485ad012",
+      "event_id": "b37861b7762dcb2971e17399",
+      "independence_group": "synthetic-research-publisher",
+      "locator": "https://example.invalid/research.xml",
+      "matched_rule_ids": [],
+      "observed_at": "2026-08-30T08:00:00Z",
+      "path": "item:research-001",
+      "severity": "low",
+      "source_id": "research-feed",
+      "source_title": "Synthetic research feed",
+      "summary": "Feed item changed: Baseline methods note",
+      "tags": []
+    },
+    {
+      "after": "7cbef19ef4829bc50562028c156fd140bbb85ddef449a4cca1e71e45b34772f0",
+      "baseline_sha256": "6b455218d100ae189830c53552f3da48cfe35349ea51141a7cfef5680ae8cc6a",
+      "before": "2883a2fcb9dcd14e20efc812e96c78600e836107c8208314be294917171801de",
+      "change_type": "content.normalized_unchanged",
+      "current_sha256": "6b455218d100ae189830c53552f3da48cfe35349ea51141a7cfef5680ae8cc6a",
+      "event_id": "f80ee928be6204b54928bc1c",
+      "independence_group": "synthetic-operator",
+      "locator": "urn:synthetic:service-status",
+      "matched_rule_ids": [],
+      "observed_at": "2026-08-30T08:00:00Z",
+      "path": "service-status.txt",
+      "severity": "low",
+      "source_id": "service-status",
+      "source_title": "Synthetic service status",
+      "summary": "Raw bytes changed, but the configured normalizer produced identical monitored content",
+      "tags": []
+    }
+  ],
+  "limitations": [
+    "The monitor compares captured representations, not the full external source.",
+    "A detected change does not prove legal effect, causality, truthfulness, or material impact.",
+    "No detected change does not prove that the source or underlying reality was unchanged.",
+    "Normalization rules can intentionally hide volatile fields and must be reviewed as part of the monitoring scope.",
+    "The v0.1.0 core does not fetch the network; it processes explicit local captures so acquisition can be isolated and audited."
+  ],
+  "monitor_id": "synthetic-public-evidence",
+  "registry_sha256": "438c83c64d72ebfc834b5e404b3333b602be7d8bcbdaa8d9fe76b641fd2cd4c7",
+  "run_id": "2026-08-30-4a8e6631aa3ebf6a",
+  "schema_version": 1,
+  "source_outcomes": [
+    {
+      "baseline_status": "ok",
+      "current_status": "ok",
+      "event_count": 1,
+      "normalized_changed": true,
+      "raw_changed": true,
+      "source_id": "policy-notice",
+      "status": "changed"
+    },
+    {
+      "baseline_status": "ok",
+      "current_status": "ok",
+      "event_count": 2,
+      "normalized_changed": true,
+      "raw_changed": true,
+      "source_id": "release-metadata",
+      "status": "changed"
+    },
+    {
+      "baseline_status": "ok",
+      "current_status": "ok",
+      "event_count": 2,
+      "normalized_changed": true,
+      "raw_changed": true,
+      "source_id": "research-feed",
+      "status": "changed"
+    },
+    {
+      "baseline_status": "ok",
+      "current_status": "ok",
+      "event_count": 1,
+      "normalized_changed": false,
+      "raw_changed": true,
+      "source_id": "service-status",
+      "status": "ignored_change"
+    }
+  ],
+  "summary": {
+    "change_type_counts": {
+      "content.normalized_unchanged": 1,
+      "feed.item_added": 1,
+      "feed.item_modified": 1,
+      "json.modified": 2,
+      "text.modified": 1
+    },
+    "event_count": 6,
+    "failed_source_count": 0,
+    "highest_severity": "critical",
+    "ignored_change_count": 1,
+    "material_event_count": 5,
+    "severity_counts": {
+      "critical": 1,
+      "high": 1,
+      "low": 1,
+      "medium": 2
+    }
+  }
+}

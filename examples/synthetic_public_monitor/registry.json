@@ -1,0 +1,131 @@
+{
+  "default_max_bytes": 1000000,
+  "limitations": [
+    "The monitor compares captured representations, not the full external source.",
+    "A detected change does not prove legal effect, causality, truthfulness, or material impact.",
+    "No detected change does not prove that the source or underlying reality was unchanged.",
+    "Normalization rules can intentionally hide volatile fields and must be reviewed as part of the monitoring scope.",
+    "The v0.1.0 core does not fetch the network; it processes explicit local captures so acquisition can be isolated and audited."
+  ],
+  "monitor_id": "synthetic-public-evidence",
+  "schema_version": 1,
+  "severity_rules": [
+    {
+      "change_types": [
+        "text.added",
+        "text.modified"
+      ],
+      "rule_id": "policy-suspension",
+      "severity": "critical",
+      "source_ids": [
+        "policy-notice"
+      ],
+      "tags": [
+        "policy",
+        "action-required"
+      ],
+      "text_regex": "(?i)\\b(suspend(?:ed|sion)?|emergency|revoked)\\b"
+    },
+    {
+      "change_types": [
+        "json.modified"
+      ],
+      "path_regex": "^/compatibility/minimum_python$",
+      "rule_id": "breaking-compatibility",
+      "severity": "high",
+      "source_ids": [
+        "release-metadata"
+      ],
+      "tags": [
+        "release",
+        "compatibility"
+      ]
+    },
+    {
+      "change_types": [
+        "feed.item_added"
+      ],
+      "rule_id": "new-research-item",
+      "severity": "medium",
+      "source_ids": [
+        "research-feed"
+      ],
+      "tags": [
+        "research",
+        "new-item"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "encoding": "utf-8",
+      "format": "html",
+      "independence_group": "synthetic-authority",
+      "input_path": "policy-notice.html",
+      "locator": "https://example.invalid/policy-notice",
+      "normalization": {
+        "case_sensitive": true,
+        "collapse_whitespace": true,
+        "ignore_json_pointers": [],
+        "ignore_regexes": [
+          "Last checked: [0-9:T+Z-]+"
+        ]
+      },
+      "priority": "critical",
+      "source_id": "policy-notice",
+      "title": "Synthetic policy notice"
+    },
+    {
+      "encoding": "utf-8",
+      "format": "json",
+      "independence_group": "synthetic-project",
+      "input_path": "release-metadata.json",
+      "locator": "https://example.invalid/releases/latest.json",
+      "normalization": {
+        "case_sensitive": true,
+        "collapse_whitespace": true,
+        "ignore_json_pointers": [
+          "/generated_at"
+        ],
+        "ignore_regexes": []
+      },
+      "priority": "high",
+      "source_id": "release-metadata",
+      "title": "Synthetic release metadata"
+    },
+    {
+      "encoding": "utf-8",
+      "format": "feed",
+      "independence_group": "synthetic-research-publisher",
+      "input_path": "research-feed.xml",
+      "locator": "https://example.invalid/research.xml",
+      "normalization": {
+        "case_sensitive": true,
+        "collapse_whitespace": true,
+        "ignore_json_pointers": [],
+        "ignore_regexes": []
+      },
+      "priority": "medium",
+      "source_id": "research-feed",
+      "title": "Synthetic research feed"
+    },
+    {
+      "encoding": "utf-8",
+      "format": "text",
+      "independence_group": "synthetic-operator",
+      "input_path": "service-status.txt",
+      "locator": "urn:synthetic:service-status",
+      "normalization": {
+        "case_sensitive": true,
+        "collapse_whitespace": true,
+        "ignore_json_pointers": [],
+        "ignore_regexes": []
+      },
+      "priority": "medium",
+      "source_id": "service-status",
+      "title": "Synthetic service status"
+    }
+  ],
+  "timezone": "UTC",
+  "title": "Synthetic Public Evidence Monitor"
+}

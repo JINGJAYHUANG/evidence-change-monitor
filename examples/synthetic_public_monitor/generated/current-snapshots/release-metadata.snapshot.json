@@ -1,0 +1,30 @@
+{
+  "error": null,
+  "independence_group": "synthetic-project",
+  "input_path": "release-metadata.json",
+  "locator": "https://example.invalid/releases/latest.json",
+  "normalized": {
+    "compatibility": {
+      "minimum_python": "3.12",
+      "platforms": [
+        "linux",
+        "macos",
+        "windows"
+      ]
+    },
+    "project": "Synthetic Toolkit",
+    "status": "stable",
+    "version": "2.0.0"
+  },
+  "normalized_sha256": "d4b1db2330c968d84f0c7c18946aac1bfc99320adec686dd3a0c74aa7f6acb3d",
+  "normalizer_version": "1.0",
+  "observed_at": "2026-08-30T08:00:00Z",
+  "priority": "high",
+  "raw_bytes": 250,
+  "raw_sha256": "7e79cabb7d96442be91c977167854a9caa5ded462197107fe12b33d6670ba24e",
+  "schema_version": 1,
+  "source_format": "json",
+  "source_id": "release-metadata",
+  "status": "ok",
+  "title": "Synthetic release metadata"
+}

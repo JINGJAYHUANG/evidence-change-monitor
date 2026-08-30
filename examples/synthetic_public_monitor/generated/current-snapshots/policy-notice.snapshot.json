@@ -1,0 +1,22 @@
+{
+  "error": null,
+  "independence_group": "synthetic-authority",
+  "input_path": "policy-notice.html",
+  "locator": "https://example.invalid/policy-notice",
+  "normalized": [
+    "Synthetic Grant Program",
+    "Applications are suspended pending an eligibility review.",
+    "Eligibility rules remain unchanged."
+  ],
+  "normalized_sha256": "26c37f0de50cff1d6823cb47bec53d91b68bb076ed2154e1b9bc705cdcc11d9b",
+  "normalizer_version": "1.0",
+  "observed_at": "2026-08-30T08:00:00Z",
+  "priority": "critical",
+  "raw_bytes": 240,
+  "raw_sha256": "90b937731a7470cb864ae2757031f1e98e11ddd1b8507f38f10f303f962c255c",
+  "schema_version": 1,
+  "source_format": "html",
+  "source_id": "policy-notice",
+  "status": "ok",
+  "title": "Synthetic policy notice"
+}

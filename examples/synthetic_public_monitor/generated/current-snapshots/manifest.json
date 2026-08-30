@@ -1,0 +1,31 @@
+{
+  "files": [
+    {
+      "bytes": 751,
+      "path": "policy-notice.snapshot.json",
+      "sha256": "9949054584ac27fd06a4634422b32c812a70e832c021c58b3b9b4fe6a8e8fca5"
+    },
+    {
+      "bytes": 849,
+      "path": "release-metadata.snapshot.json",
+      "sha256": "81773277ba3d15b051ca906b4376e52734219fd87ecbf0f5fe42ef236c8209da"
+    },
+    {
+      "bytes": 1109,
+      "path": "research-feed.snapshot.json",
+      "sha256": "778e012757c1def396ee5bd1bbcca9f14c058d417b481e62bd4ecc116b6591f7"
+    },
+    {
+      "bytes": 635,
+      "path": "service-status.snapshot.json",
+      "sha256": "0bd4bdd397e64e258aec4e606cd504df9dc271b7d7354af42169f7b4f4176b7e"
+    },
+    {
+      "bytes": 1265,
+      "path": "snapshot-index.json",
+      "sha256": "cc788aec469366dea686c61e636f8b1eae91c474608ce2742b2a9c5e398f08f4"
+    }
+  ],
+  "manifest_sha256": "7a83d41350ee27adb0ffb1e8e8794e00cc35fcbd7655bc736791324531e77b6b",
+  "schema_version": 1
+}

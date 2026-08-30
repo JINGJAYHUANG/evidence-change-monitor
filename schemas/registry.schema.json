@@ -1,0 +1,201 @@
+{
+  "$id": "https://example.invalid/schemas/registry.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "default_max_bytes": {
+      "maximum": 10000000,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "limitations": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "monitor_id": {
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "severity_rules": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "change_types": {
+            "items": {
+              "enum": [
+                "source.first_seen",
+                "source.missing",
+                "source.parse_error",
+                "source.oversize",
+                "content.normalized_unchanged",
+                "text.added",
+                "text.removed",
+                "text.modified",
+                "json.added",
+                "json.removed",
+                "json.modified",
+                "feed.item_added",
+                "feed.item_removed",
+                "feed.item_modified"
+              ]
+            },
+            "type": "array"
+          },
+          "path_regex": {
+            "type": "string"
+          },
+          "rule_id": {
+            "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "info",
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "source_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "tags": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "text_regex": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_id",
+          "severity"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "sources": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "encoding": {
+            "enum": [
+              "utf-8",
+              "utf-8-sig"
+            ]
+          },
+          "format": {
+            "enum": [
+              "text",
+              "html",
+              "json",
+              "feed"
+            ]
+          },
+          "independence_group": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "input_path": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "locator": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "max_bytes": {
+            "maximum": 10000000,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "normalization": {
+            "additionalProperties": false,
+            "properties": {
+              "case_sensitive": {
+                "type": "boolean"
+              },
+              "collapse_whitespace": {
+                "type": "boolean"
+              },
+              "ignore_json_pointers": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "ignore_regexes": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "priority": {
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "source_id": {
+            "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_id",
+          "title",
+          "locator",
+          "input_path",
+          "format",
+          "priority",
+          "independence_group"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "timezone": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "title": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "monitor_id",
+    "title",
+    "timezone",
+    "sources",
+    "severity_rules",
+    "limitations"
+  ],
+  "title": "Evidence Change Monitor Registry",
+  "type": "object"
+}

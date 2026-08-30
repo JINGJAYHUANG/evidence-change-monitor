@@ -1,0 +1,99 @@
+{
+  "$id": "https://example.invalid/schemas/snapshot.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "error": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "independence_group": {
+      "type": "string"
+    },
+    "input_path": {
+      "type": "string"
+    },
+    "locator": {
+      "type": "string"
+    },
+    "normalized": {},
+    "normalized_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "normalizer_version": {
+      "type": "string"
+    },
+    "observed_at": {
+      "type": "string"
+    },
+    "priority": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "raw_bytes": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "raw_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "source_format": {
+      "enum": [
+        "text",
+        "html",
+        "json",
+        "feed"
+      ]
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "missing",
+        "oversize",
+        "parse_error",
+        "error"
+      ]
+    },
+    "title": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "source_id",
+    "title",
+    "locator",
+    "independence_group",
+    "source_format",
+    "priority",
+    "observed_at",
+    "input_path",
+    "status",
+    "raw_sha256",
+    "normalized_sha256",
+    "normalizer_version",
+    "normalized",
+    "raw_bytes",
+    "error"
+  ],
+  "title": "Evidence Change Monitor Snapshot",
+  "type": "object"
+}

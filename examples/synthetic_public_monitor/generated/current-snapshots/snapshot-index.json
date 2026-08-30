@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "normalized_sha256": "26c37f0de50cff1d6823cb47bec53d91b68bb076ed2154e1b9bc705cdcc11d9b",
+      "path": "policy-notice.snapshot.json",
+      "snapshot_sha256": "18642befb32a2253c40cf11d182f82ffb1a70923effb00b6bc5a185c9bc1828e",
+      "source_id": "policy-notice",
+      "status": "ok"
+    },
+    {
+      "normalized_sha256": "d4b1db2330c968d84f0c7c18946aac1bfc99320adec686dd3a0c74aa7f6acb3d",
+      "path": "release-metadata.snapshot.json",
+      "snapshot_sha256": "3ced4cea0f1968ace55e1711a394190a4d3cc436740ab05ea9d131e043c6c021",
+      "source_id": "release-metadata",
+      "status": "ok"
+    },
+    {
+      "normalized_sha256": "5475ac6fc11b9700f64a1011970315e5201286f27a493554831b7cfe485ad012",
+      "path": "research-feed.snapshot.json",
+      "snapshot_sha256": "810e6c4201c671c1670e5a7a0eca564e3a9bcb5cc2d0ebc49f084aa41e285648",
+      "source_id": "research-feed",
+      "status": "ok"
+    },
+    {
+      "normalized_sha256": "6b455218d100ae189830c53552f3da48cfe35349ea51141a7cfef5680ae8cc6a",
+      "path": "service-status.snapshot.json",
+      "snapshot_sha256": "5f4081f6dec532b2a96cb66a08159c1bfbb3e75483d40fcfd0b241c3923052d1",
+      "source_id": "service-status",
+      "status": "ok"
+    }
+  ]
+}
